@@ -1,0 +1,302 @@
+Login:
+  title: login
+  description: user can login the system
+
+  method: POST
+  url: /login
+
+  headers: |
+    Content-Type: application/json
+
+  request: |
+    {
+      "username": "xxx",
+      "password": "xxx",
+      "orgName": "xxxx"
+    }
+
+  response: |
+    {
+      "success": false/true,
+      "message": "xxxxxx",
+      "token": "xxxxxxxx",
+      "exp": 12313131231
+    }
+
+CreateChannel:
+  title: create_channel
+  description: user can create channel
+
+  method: POST
+  url: /channels
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "channelName":"xxxxxx",
+      "channelConfigPath":"xxxxxxx",
+      "orderer": "xxxxxxxxx"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+JoinChannel:
+  title: join_channel
+  description: join channel
+
+  method: POST
+  url: /channels/{channelName}/peers
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peers":"[xxx,xxxx]"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+InstallChaincode:
+  title: install_chaincode
+  description: install chaincode
+
+  method: POST
+  url: /chaincodes
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peers":"[xxx,xxxx]",
+      "chaincodeName": "xxxx",
+      "chaincodePath": "xxxxx",
+      "chaincodeType": "golang/node",
+      "chaincodeVersion": "xxxx"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+InstantiateChaincode:
+  title: instantiate_chaincode
+  description: instantiate chaincode
+
+  method: POST
+  url: /channels/{channelName}/chaincodes
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peer":"xxx",
+      "chaincodeName": "xxxx",
+      "chaincodeType": "golang/node",
+      "chaincodeVersion": "xxxx",
+      "args": "[xxx,xxx,xxxx,xxx]"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+InvokeChaincode:
+  title: invoke_chaincode
+  description: invoke chaincode
+
+  method: POST
+  url: /channels/{channelName}/chaincodes/{chaincodeName}
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peers":"[xxx,xxxxx]",
+      "fcn": "xxxx",
+      "args": "[xxx,xxx,xxxx,xxx]"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "txId": "xxxxxxx",
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+QueryChaincode:
+  title: query_chaincode
+  description: query chaincode
+
+  method: POST
+  url: /query/channels/{channelName}/chaincodes/{chaincodeName}
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peers":"[xxx,xxxxx]",
+      "fcn": "xxxx",
+      "args": "[xxx,xxx,xxxx,xxx]"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "payloads": "[xxxxx,xxxxxx]",
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+UpgradeChaincode:
+  title: upgrade_chaincode
+  description: upgrade chaincode
+
+  method: PUT
+  url: /channels/{channelName}/chaincodes
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peer":"xxx",
+      "chaincodeName": "xxxx",
+      "chaincodeType": "golang/node",
+      "chaincodeVersion": "xxxx",
+      "args": "[xxx,xxx,xxxx,xxx]"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+QueryTransaction:
+  title: query_transaction
+  description: query transaction
+
+  method: POST
+  url: /query/channels/{channelName}/transactions/{transactionId}
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peer":"xxxx"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "tx": "xxxxxxxxxxxxxxxxx",
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+QueryBlockByNumber:
+  title: query_block_by_number
+  description: query block by number
+
+  method: POST
+  url: /channels/{channelName}/blocks/{blockNumber}
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peer":"xxxx"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "block": "xxxxxxxxxxxxxxxxx",
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+QueryBlockByHash:
+  title: query_block_by_hash
+  description: query block by hash
+
+  method: POST
+  url: /channels/{channelName}/blocks
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peer":"xxxx",
+      "hash":"xxxxxxxxx"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "block": "xxxxxxxxxxxxxxxxx",
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }
+
+QueryChannel:
+  title: query_channel
+  description: query channel
+
+  method: POST
+  url: /channels/{channelName}
+
+  headers: |
+     authorization: Bearer xxxxxx
+     content-type: application/json
+
+  Input: |
+    {
+      "peer":"xxxx"
+    }
+
+  Response: |
+    {
+      "success": false/true,
+      "channel": "xxxxxxxxxxxxxxxxx",
+      "message": "xxxxxx",
+      "timestamp": 3123131231231231
+    }

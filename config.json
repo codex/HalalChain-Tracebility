@@ -1,0 +1,20 @@
+{
+   "host":"localhost",
+   "port":"4000",
+   "jwt_expiretime": "36000",
+   "channelName":"mychannel",
+   "CC_SRC_PATH":"../chaincode",
+   "eventWaitTime":"30000",
+   "admins":[
+      {
+         "username":"admin",
+         "secret":"adminpw"
+      }
+   ],
+   "config_server": {
+      "endpoint": "http://grapebaba:heatonn1@localhost:8888",
+      "names": ["network_config","hlc","creater","transfer","seller"],
+      "profile": "test",
+      "label": "master"
+   }
+}
