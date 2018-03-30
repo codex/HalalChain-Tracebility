@@ -1,12 +1,12 @@
 module.exports = {    
-  pageTitle:"飞凡新商业",
+  pageTitle:"",
   FFAN_CONFIG: {
     apiRoot: '/webAPI',
-    host: '10.213.128.100',    
+    host: '',    
     staticPrefix: "",    
     port:10001,
     virtualPath: '',
-    storageNameSpace: 'sharingB_TEST',
+    storageNameSpace: '',
     authToken: 'userAuth',
     storage: 'local'
   }
