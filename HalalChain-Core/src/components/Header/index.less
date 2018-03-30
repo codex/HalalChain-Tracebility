@@ -1,0 +1,63 @@
+.Header {
+  width: 100%;
+  background: #f5f6f6;
+  padding: 15px 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    background: url(/img/LOGO.png) no-repeat;
+    background-size: contain;
+    width: 227px;
+    height: 32px;
+    display: inline-block;
+  }
+  .top-btn {
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+    .yin-dao-icon {
+      background: url(/img/yindao-icon.png) no-repeat;
+      background-size: contain;
+      width: 25px;
+      height: 25px;
+      margin-left: 10px;
+      display: inline-block;
+    }
+    .user-name,
+    .logout {
+      font-size: 14px;
+      color: #063b7b;
+      border: 1px solid #063b7b;
+      height: 25px;
+      line-height: 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      // width: 248px;
+      padding: 0 17px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .use-icon {
+        background: url(/img/user_icon.png) no-repeat;
+        background-size: contain;
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        margin-right: 10px;
+      }
+      .out-icon {
+        background: url(/img/quit_icon.png) no-repeat;
+        background-size: contain;
+        width: 12px;
+        height: 13px;
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+    .logout {
+      margin-left: 10px;
+    }
+  }  
+}

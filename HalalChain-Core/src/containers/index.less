@@ -1,0 +1,242 @@
+@import "./variables";
+@import "./table";
+@import "autoSuggestion";
+
+.clearfix {
+  zoom: 1;
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+}
+
+.loading{
+  background: url(/img/loading/circle.gif) 50% 50% no-repeat #fff;
+  background-size: 50%;
+}
+
+.ft-color-orange {
+  color: @primary-orange;
+}
+
+.container {
+  margin: 0 auto;
+  width: 1200px;
+
+  &-header {
+    margin-bottom: 20px;
+
+    &-left {
+      text-align: left;
+    }
+
+    &-right {
+      text-align: right;
+
+      .ant-input-search-icon {
+        z-index: 2;
+      }
+    }
+  }
+
+  &-body {
+    padding: 20px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  &-footer {
+    padding: 20px;
+    text-align: center;
+
+    .ant-btn {
+      margin-right: 20px;
+    }
+  }
+}
+
+.form-group {
+  font-size: 16px;
+  margin-top: 30px;
+  margin-left: -100px;
+
+  &.first {
+    margin-top: 10px;
+  }
+}
+
+.form-separate {
+  height: 1px;
+  background: #D8D8D8;
+}
+
+.form-bottom {
+  text-align: center;
+  margin-top: 24px;
+
+  .ant-btn {
+    margin-right: 15px;
+  }
+}
+
+.form-block {
+  padding: 24px 0;
+
+  &.even {
+    background: #FAFAFA;
+  }
+}
+
+.from-upload {
+  margin-top: 12px;
+}
+
+.ant-btn-link {
+  font-size: 12px;
+
+  &.danger {
+    color: #F04134
+  }
+}
+
+.form-checkbox {
+
+  &.ant-form-item {
+    margin-bottom: 12px;
+  }
+
+}
+
+.form-checkbox-long-text {
+
+  .ant-checkbox-wrapper + span,
+  .ant-checkbox + span {
+    display: inline-block;
+    width: 80%;
+    vertical-align: top;
+    padding: 0;
+    margin-left: 5px;
+  }
+}
+
+.logo-animated {
+  position: absolute;
+  height: 110px;
+  width: 110px;
+  left: 50%;
+  margin-left: -55px;
+  top: 70px;
+  border: 2px solid #fff;
+  border-radius: 100%;
+
+  img {
+    width: 70px;
+    height: 70px;
+    margin: 20px;
+  }
+
+  &-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: route360 4s ease-in-out infinite
+  }
+
+  &-point {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 5px;
+    margin: -6px auto;
+  }
+
+}
+
+.ant-breadcrumb {
+  padding: 15px 0;
+
+  .ant-breadcrumb-link {
+    font-weight: normal;
+    color: @tint-gray;
+  }
+
+  & > span:last-child .ant-breadcrumb-link {
+    color: @primary-black
+  }
+}
+
+.ant-input-number.invalid {
+  border: 1px solid @primary-orange;
+}
+
+.result-list {
+  margin-right: -20px;
+}
+
+@keyframes route360 {
+  from {
+    transform: rotateZ(0);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+input::-webkit-input-placeholder { /* WebKit browsers */
+  color: @placeholder;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: @placeholder;
+}
+
+input::-moz-placeholder { /* Mozillcolor: red;*/
+  color: @placeholder;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: @placeholder;
+}
+
+.register {
+  min-height: 500px;
+
+  &-wrap.container {
+    position: relative;
+    margin: 40px auto 0;
+    width: 990px;
+    h1{
+      font-size: 20px;
+    }
+  }
+
+  &-form {
+    width: 600px;
+    margin: 30px auto 0;
+  }
+
+  &-area {
+    &.hidden {
+      display: none;
+    }
+    .ant-form-explain {
+      clear: both;
+    }
+  }
+
+  &-submit {
+    margin-top: 50px;
+    text-align: center;
+
+    .ant-btn-primary {
+      width: 100%;
+    }
+
+    p {
+      color: #999;
+    }
+  }
+}

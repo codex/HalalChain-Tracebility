@@ -1,0 +1,34 @@
+@import "variables";
+
+.table-footer {
+  background: @background-gray;
+  height: 50px;
+  line-height: 50px;
+
+  &-left {
+    float: left;
+    padding-left: 20px;
+  }
+
+  &-right {
+    float: right;
+    text-align: right;
+    position: relative;
+
+    span {
+      margin: 0 5px;
+      font-weight: bold;
+      color: @primary-orange;
+    }
+
+    button{
+      width: 100px;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      color: #fff;
+      background: @primary-orange;
+      margin-left: 20px;
+    }
+  }
+}
