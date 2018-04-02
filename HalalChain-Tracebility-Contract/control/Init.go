@@ -1,8 +1,3 @@
-/*
-@author: lau
-@email: laulucky@126.com
-@date: 2018/2/7
- */
 package control
 
 import (

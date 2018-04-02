@@ -1,8 +1,3 @@
-/*
-@author: lau
-@email: laulucky@126.com
-@date: 2018/2/7
- */
 package service
 
 import (
@@ -16,9 +11,8 @@ import (
 	"reflect"
 )
 
-/** 产品注册 **/
+/** asset register **/
 func Register(stub shim.ChaincodeStubInterface, param module.RegisterParam) pb.Response {
-	//校验产品是否已注册
 	jsonByte, err := stub.GetState(param.ProductId)
 	if err != nil {
 		return shim.Error("get product txList error" + err.Error())
@@ -47,17 +41,14 @@ func Register(stub shim.ChaincodeStubInterface, param module.RegisterParam) pb.R
 	if err != nil {
 		return shim.Error("Mashal productInfo error" + err.Error())
 	}
-	//保存交易详细信息
 	err = stub.PutState(txId, jsonByte)
 	if err != nil {
 		return shim.Error("Put productInfo error" + err.Error())
 	}
-	//保存产品详细信息
 	err = stub.PutState(common.PRODUCT_INFO+common.ULINE+param.ProductId, jsonByte)
 	if err != nil {
 		return shim.Error("Put productInfo error" + err.Error())
 	}
-	//保存产品所属信息
 	var productOwner = module.ProductOwner{}
 	productOwner.PreOwner = common.SYSTEM
 	productOwner.CurrentOwner = getMspid(stub)
@@ -69,7 +60,6 @@ func Register(stub shim.ChaincodeStubInterface, param module.RegisterParam) pb.R
 	if err != nil {
 		return shim.Error("Put productOwner error" + err.Error())
 	}
-	//更新产品的交易基本信息列表
 
 	var txInfoAdd = module.TxInfoAdd{}
 	txInfoAdd.MapPosition = product.MapPosition
@@ -82,7 +72,7 @@ func Register(stub shim.ChaincodeStubInterface, param module.RegisterParam) pb.R
 	return shim.Success(nil)
 }
 
-/** 查询产品详细信息 **/
+/** query asset detail **/
 func QueryProductDetail(stub shim.ChaincodeStubInterface, param module.QueryProductDetailParam) pb.Response {
 	jsonByte, err := stub.GetState(common.PRODUCT_INFO + common.ULINE + param.ProductId)
 	if err != nil {
@@ -92,9 +82,8 @@ func QueryProductDetail(stub shim.ChaincodeStubInterface, param module.QueryProd
 	return shim.Success(jsonByte)
 }
 
-/** 查询产品流转信息**/
+/** query asset follow **/
 func QueryProductChange(stub shim.ChaincodeStubInterface, param module.QueryParam) pb.Response {
-	//查询产品现有交易列表
 	jsonByte, err := stub.GetState(param.ProductId)
 	if err != nil {
 		return shim.Error("get product txList error" + err.Error())
@@ -102,9 +91,8 @@ func QueryProductChange(stub shim.ChaincodeStubInterface, param module.QueryPara
 	return shim.Success(jsonByte)
 }
 
-/** 查询交易信息**/
+/** query transaction **/
 func QueryTx(stub shim.ChaincodeStubInterface, param module.QueryTxParam) pb.Response {
-	//查询交易详情
 	jsonByte, err := stub.GetState(param.TxId)
 	if err != nil {
 		return shim.Error("get tx info error" + err.Error())
@@ -112,18 +100,15 @@ func QueryTx(stub shim.ChaincodeStubInterface, param module.QueryTxParam) pb.Res
 	return shim.Success(jsonByte)
 }
 
-/** 权属变更**/
+/** change owner **/
 func ChangeOwner(stub shim.ChaincodeStubInterface, param module.ChangeOrgParam) pb.Response {
-	//查询产品当前所属
 	productOwner, err := queryProductOwner(stub, param.ProductId)
 	if err != nil {
 		return shim.Error("get productOwner error" + err.Error())
 	}
-	//验证交易发起方是否有权限
 	if getMspid(stub) != productOwner.CurrentOwner {
 		return shim.Error("tx sender has no auth to change owner")
 	}
-	//更改产品权属信息&记录交易详情
 	var changeOwner = module.ChangeOwner{}
 	changeOwner.Before.PreOwner = productOwner.PreOwner
 	changeOwner.Before.CurrentOwner = productOwner.CurrentOwner
@@ -133,7 +118,6 @@ func ChangeOwner(stub shim.ChaincodeStubInterface, param module.ChangeOrgParam) 
 	if err!= nil{
 		return shim.Error("change product owner error"+err.Error())
 	}
-	//更新产品交易列表信息
 	var txInfoAdd = module.TxInfoAdd{}
 	txInfoAdd.MapPosition = productOwner.CurrentOwner
 	txInfoAdd.Operation = "ChangeOwner"
@@ -145,14 +129,12 @@ func ChangeOwner(stub shim.ChaincodeStubInterface, param module.ChangeOrgParam) 
 	return shim.Success(nil)
 }
 
-/** 确认权属变更**/
+/** confirm change owner **/
 func ConfirmChangeOwner(stub shim.ChaincodeStubInterface, param module.ComfirmChangeParam) pb.Response {
-	//查询产品当前所属
 	productOwner, err := queryProductOwner(stub, param.ProductId)
 	if err != nil {
 		return shim.Error("get productOwner error" + err.Error())
 	}
-	//验证交易发起方是否有权限
 	currentOwner := productOwner.CurrentOwner
 	if !strings.Contains(currentOwner, common.UNCOMFIRM) {
 		return shim.Error("change tx has been confirmed")
@@ -160,7 +142,6 @@ func ConfirmChangeOwner(stub shim.ChaincodeStubInterface, param module.ComfirmCh
 	if getMspid(stub) != currentOwner[10:] {
 		return shim.Error("tx sender has no auth to confirm change owner")
 	}
-	//更改产品权属信息&记录交易详情
 	var changeOwner = module.ChangeOwner{}
 	changeOwner.Before.PreOwner = productOwner.PreOwner
 	changeOwner.Before.CurrentOwner = productOwner.CurrentOwner
@@ -170,7 +151,6 @@ func ConfirmChangeOwner(stub shim.ChaincodeStubInterface, param module.ComfirmCh
 	if err!= nil{
 		return shim.Error("change product owner error"+err.Error())
 	}
-	//更新产品交易列表信息
 	var txInfoAdd = module.TxInfoAdd{}
 	txInfoAdd.MapPosition = changeOwner.After.CurrentOwner
 	txInfoAdd.Operation = "ConfirmChange"
@@ -180,7 +160,6 @@ func ConfirmChangeOwner(stub shim.ChaincodeStubInterface, param module.ComfirmCh
 		return shim.Error("Put TxList error" + err.Error())
 	}
 
-	/** 更改前后所属 **/
 	product := module.ProductInfo{}
 
 	jsonByte, err := stub.GetState(common.PRODUCT_INFO + common.ULINE + param.ProductId)
@@ -209,18 +188,15 @@ func ConfirmChangeOwner(stub shim.ChaincodeStubInterface, param module.ComfirmCh
 	return shim.Success(nil)
 }
 
-/** 产品售出销毁**/
+/** assest destory **/
 func DestroyProduct(stub shim.ChaincodeStubInterface, param module.DestroyParam) pb.Response {
-	//查询产品当前所属
 	productOwner, err := queryProductOwner(stub, param.ProductId)
 	if err != nil {
 		return shim.Error("get productOwner error" + err.Error())
 	}
-	//验证交易发起方是否有权限
 	if getMspid(stub) != productOwner.CurrentOwner {
 		return shim.Error("tx sender has no auth to confirm change owner")
 	}
-	//销毁产品&记录交易详情
 	var changeOwner = module.ChangeOwner{}
 	changeOwner.Before.PreOwner = productOwner.PreOwner
 	changeOwner.Before.CurrentOwner = productOwner.CurrentOwner
@@ -230,7 +206,6 @@ func DestroyProduct(stub shim.ChaincodeStubInterface, param module.DestroyParam)
 	if err!= nil{
 		return shim.Error("change product owner error"+err.Error())
 	}
-	//更新产品交易列表信息
 	var txInfoAdd = module.TxInfoAdd{}
 	txInfoAdd.MapPosition = productOwner.CurrentOwner
 	txInfoAdd.Operation = "Destroy"
@@ -242,24 +217,20 @@ func DestroyProduct(stub shim.ChaincodeStubInterface, param module.DestroyParam)
 	return shim.Success(nil)
 }
 
-/** 产品属性变更**/
+/** asset change **/
 func ChangeProductInfo(stub shim.ChaincodeStubInterface, param map[string]interface{}) pb.Response {
-	//查询产品当前所属
 	productId := reflect.ValueOf(param[common.PRODUCT_ID]).String()
 	productOwner, err := queryProductOwner(stub, productId)
 	if err != nil {
 		return shim.Error("get productOwner error" + err.Error())
 	}
-	//验证交易发起方是否有权限
 	if getMspid(stub) != productOwner.CurrentOwner {
 		return shim.Error("tx sender has no auth to change productInfo")
 	}
-	//更改产品详细信息&记录交易详情
 	err = changeProductInfo(stub,param)
 	if err!= nil{
 		return shim.Error("change productInfo error"+err.Error())
 	}
-	//更新产品交易列表信息
 	var productInfo = module.ProductInfo{}
 	common.SetStructByJsonName(&productInfo,param)
 

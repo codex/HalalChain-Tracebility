@@ -1,8 +1,3 @@
-/*
-@author: lau
-@email: laulucky@126.com
-@date: 2018/2/7
- */
 package control
 
 import (
@@ -45,9 +40,6 @@ func (t *ProductTrace) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	return shim.Error("Invalid invoke function name. " + args[0])
 }
 
-/**
-注册产品信息入口
-**/
 func (t *ProductTrace) Register(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用产品注册接口开始###############")
 	if len(args) < 1 {
@@ -62,9 +54,6 @@ func (t *ProductTrace) Register(stub shim.ChaincodeStubInterface, args []string)
 	return service.Register(stub, Param)
 }
 
-/**
-变更产品所属信息入口
-**/
 func (t *ProductTrace) ChangeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用变更产品所属接口开始###############")
 	if len(args) < 1 {
@@ -79,9 +68,6 @@ func (t *ProductTrace) ChangeOwner(stub shim.ChaincodeStubInterface, args []stri
 	return service.ChangeOwner(stub, Param)
 }
 
-/**
-确认产品权属变更接口入口
-**/
 func (t *ProductTrace) ConfirmChangeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用确认产品权属变更接口开始###############")
 	if len(args) < 1 {
@@ -96,9 +82,6 @@ func (t *ProductTrace) ConfirmChangeOwner(stub shim.ChaincodeStubInterface, args
 	return service.ConfirmChangeOwner(stub, Param)
 }
 
-/**
-产品销毁入口
-**/
 func (t *ProductTrace) DestroyProduct(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用产品销毁接口开始###############")
 	if len(args) < 1 {
@@ -113,9 +96,6 @@ func (t *ProductTrace) DestroyProduct(stub shim.ChaincodeStubInterface, args []s
 	return service.DestroyProduct(stub, Param)
 }
 
-/**
-查询产品流转入口
-**/
 func (t *ProductTrace) QueryProductChange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用查询产品信息接口开始###############")
 	if len(args) < 1 {
@@ -130,9 +110,6 @@ func (t *ProductTrace) QueryProductChange(stub shim.ChaincodeStubInterface, args
 	return service.QueryProductChange(stub, Param)
 }
 
-/**
-查询产品详情入口
-**/
 func (t *ProductTrace) QueryProductDetail(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用查询产品详情接口开始###############")
 
@@ -151,9 +128,6 @@ func (t *ProductTrace) QueryProductDetail(stub shim.ChaincodeStubInterface, args
 	return service.QueryProductDetail(stub, Param)
 }
 
-/**
-查询交易详情入口
-**/
 func (t *ProductTrace) QueryTx(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用查询交易信息接口开始###############")
 	if len(args) < 1 {
@@ -168,9 +142,6 @@ func (t *ProductTrace) QueryTx(stub shim.ChaincodeStubInterface, args []string) 
 	return service.QueryTx(stub, Param)
 }
 
-/**
-变更产品属性入口
-**/
 func (t *ProductTrace) ChangeProductInfo(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	log.Logger.Info("##############调用变更产品属性接口开始###############")
 	if len(args) < 1 {

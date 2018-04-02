@@ -1,8 +1,3 @@
-/*
-@author: lau
-@email: laulucky@126.com
-@date: 2018/2/7
- */
 package service
 
 import (
@@ -17,14 +12,12 @@ import (
 	"errors"
 )
 
-/** 获取交易发起方的MSPID **/
 func getMspid(stub shim.ChaincodeStubInterface) (mspid string) {
-	createrbyte, err := stub.GetCreator() //获得创建者
+	createrbyte, err := stub.GetCreator()
 	if err != nil {
 		log.Logger.Error("shim getCreater error", err.Error())
 		return ""
 	}
-	//解析MSPID
 	newbytes := []byte{}
 	headFlg := true
 	for i := 0; i < len(createrbyte); i++ {
@@ -41,9 +34,7 @@ func getMspid(stub shim.ChaincodeStubInterface) (mspid string) {
 	return string(newbytes)
 }
 
-/**更新产品的交易基本信息列表 **/
 func putTxId(stub shim.ChaincodeStubInterface, productId string, productOwner module.ProductOwner, txType string, txInfoAdd module.TxInfoAdd) error {
-	//查询产品现有交易列表
 	jsonByte, err := stub.GetState(productId)
 	if err != nil {
 		log.Logger.Error("get product txList error", err.Error())
@@ -58,7 +49,6 @@ func putTxId(stub shim.ChaincodeStubInterface, productId string, productOwner mo
 		}
 	}
 
-	//将最新的产品交易列表更新到账本
 	txInfo := module.TxInfo{}
 	txInfo.TxId = stub.GetTxID()
 	txInfo.PreOwner = productOwner.PreOwner
@@ -89,7 +79,6 @@ func putTxId(stub shim.ChaincodeStubInterface, productId string, productOwner mo
 	return nil
 }
 
-/**查询产品当前所属 **/
 func queryProductOwner(stub shim.ChaincodeStubInterface, productId string) (productOwner module.ProductOwner, err error) {
 	jsonByte, err := stub.GetState(common.PRODUCT_OWNER + common.ULINE + productId)
 	if err != nil {
@@ -104,9 +93,7 @@ func queryProductOwner(stub shim.ChaincodeStubInterface, productId string) (prod
 	return productOwner, nil
 }
 
-/**更改产品当前所属,记录交易详情 **/
 func changeProductOwner(stub shim.ChaincodeStubInterface, before,after module.ProductOwner,productId string) (err error) {
-	//保存最新产品权属信息
 	jsonByte, err := json.Marshal(after)
 	if err != nil {
 		log.Logger.Error("Marshal productOwner error",err.Error())
@@ -117,7 +104,6 @@ func changeProductOwner(stub shim.ChaincodeStubInterface, before,after module.Pr
 		log.Logger.Error("put productOwner error",err.Error())
 		return err
 	}
-	//保存交易详细信息
 	var changeOwner = module.ChangeOwner{}
 	changeOwner.Before = before
 	changeOwner.After = after
@@ -134,7 +120,6 @@ func changeProductOwner(stub shim.ChaincodeStubInterface, before,after module.Pr
 	return nil
 }
 
-/**查询产品基本信息 **/
 func getProductInfo(stub shim.ChaincodeStubInterface, productId string) (productInfo module.ProductInfo, err error) {
 	jsonByte, err := stub.GetState(common.PRODUCT_INFO + common.ULINE + productId)
 	if err != nil {
@@ -152,7 +137,6 @@ func getProductInfo(stub shim.ChaincodeStubInterface, productId string) (product
 	return productInfo, nil
 }
 
-/**更改产品信息,记录交易详情 **/
 func changeProductInfo(stub shim.ChaincodeStubInterface, param map[string]interface{}) (err error) {
 	productId := reflect.ValueOf(param[common.PRODUCT_ID]).String()
 	log.Logger.Info("productId:",productId)
@@ -160,10 +144,8 @@ func changeProductInfo(stub shim.ChaincodeStubInterface, param map[string]interf
 	if err!= nil{
 		return err
 	}
-	//记录变更前产品信息
 	var changeProduct = module.ChangeProduct{}
 	changeProduct.Before = productInfo
-	//更新产品信息
 	common.SetStructByJsonName(&productInfo,param)
 	changeProduct.After = productInfo
 	jsonByte,err := json.Marshal(productInfo)
@@ -175,7 +157,6 @@ func changeProductInfo(stub shim.ChaincodeStubInterface, param map[string]interf
 	if err != nil {
 		return err
 	}
-	//保存交易详细信息
 	jsonByte, err = json.Marshal(changeProduct)
 	if err != nil {
 		log.Logger.Error("Marshal changeProduct error", err.Error())
