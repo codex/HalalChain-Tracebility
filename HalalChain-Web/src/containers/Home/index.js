@@ -60,7 +60,8 @@ const getProductId = () => {
   return Code.join('');
 };
 const currData = moment().format('YYYYMMDD');
-const initBatches = `YZBS20180327${currData}${parseInt(Math.random() * 1000)}`;
+const initBatches = `YZBS${currData}${parseInt(Math.random() * 1000)}`;
+
 class Home extends Component {
   state = {
     selectedRowKeys: [],
