@@ -79,7 +79,7 @@ class Slaughter extends Component {
         dataIndex: 'mapPosition'
       },
       {
-        title: 'IOT Terminals',
+        title: 'Operator',
         // width: '150px',
         dataIndex: 'iName'
       },

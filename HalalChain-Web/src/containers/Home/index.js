@@ -86,7 +86,7 @@ class Home extends Component {
         dataIndex: 'mapPosition'
       },
       {
-        title: 'IOT Terminals',
+        title: 'Operator',
         dataIndex: 'iName'
       },
       {
@@ -190,7 +190,7 @@ class Home extends Component {
               item.type = type;
               item.penNum = values['penNum'];
               item.inModule = values['inModule'];
-              item.days = values[`days_${dataIndex}`];
+              item.days = String[`days_${dataIndex}`];
               item.condition = values[`condition_${dataIndex}`];
               data.push(
                 new Promise(function(resolve, reject) {

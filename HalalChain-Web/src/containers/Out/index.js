@@ -72,7 +72,7 @@ class Out extends Component {
         dataIndex: 'mapPosition'
       },
       {
-        title: 'Terminals',
+        title: 'Operator',
         width: '120px',
         dataIndex: 'iName'
       },
